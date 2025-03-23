@@ -188,6 +188,11 @@ def review():
     #return render_template('review.html', manuscripts=manuscripts)
     return render_template('review.html')
 
+@app.route('/submit_manuscript', methods=['GET', 'POST'])
+@login_required
+def submit_manuscript():
+    return render_template('submit_manuscript.html')
+
 @app.route('/manuscripts', methods=['POST'])
 @login_required
 def create_manuscript():
@@ -265,8 +270,7 @@ def create_manuscript():
             'message': f'Error creating manuscript: {str(e)}'
         }), 500
 
-
-    return redirect('/manuscripts')
+    return redirect(url_for('dashboard'))
 
 # Notifications
 @app.route('/notifications')
