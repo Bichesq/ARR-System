@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Tina Education</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        /* Header Section */
+        header {
+            background-color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .main-nav ul li {
+            margin-left: 30px;
+        }
+
+        .main-nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .profile-menu {
+            position: relative;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #1f3a8a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: flex;
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+            position: fixed;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .sidebar-menu ul {
+            list-style: none;
+        }
+
+        .sidebar-menu ul li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu ul li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-menu ul li a:hover,
+        .sidebar-menu ul li a.active {
+            background-color: #f0f4ff;
+            color: #1f3a8a;
+            border-left: 3px solid #1f3a8a;
+        }
+
+        .sidebar-menu ul li a i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .menu-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .menu-section h3 {
+            padding: 0 20px;
+            margin-bottom: 15px;
+            color: #888;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h1 {
+            color: #333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #1f3a8a;
+            color: white;
+            border: none;
+        }
+
+        .btn-outline {
+            background-color: white;
+            color: #1f3a8a;
+            border: 1px solid #1f3a8a;
+        }
+
+        /* Dashboard Overview */
+        .overview-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+
+        .stat-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-card .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background-color: #eef4ff;
+            color: #1f3a8a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Dashboard Sections */
+        .dashboard-section {
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            color: #333;
+        }
+
+        .section-header a {
+            color: #1f3a8a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Publications Grid */
+        .publications-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .publication-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .publication-cover {
+            height: 160px;
+            background-color: #147a7a;
+            position: relative;
+        }
+
+        .publication-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-published {
+            background-color: #e6f7ef;
+            color: #0bab5d;
+        }
+
+        .status-draft {
+            background-color: #fff8e6;
+            color: #d68000;
+        }
+
+        .status-review {
+            background-color: #edf6ff;
+            color: #147dda;
+        }
+
+        .publication-details {
+            padding: 20px;
+        }
+
+        .publication-details h3 {
+            margin-bottom: 10px;
+        }
+
+        .publication-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .publication-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .action-link {
+            color: #1f3a8a;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        /* Analytics Section */
+        .analytics-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .chart-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 20px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-container h3 {
+            margin-bottom: 20px;
+        }
+
+        .chart-placeholder {
+            flex: 1;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+        }
+
+        /* Upcoming Deadlines */
+        .deadlines-list {
+            margin-top: 15px;
+        }
+
+        .deadline-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .deadline-date {
+            width: 50px;
+            height: 50px;
+            background-color: #f0f4ff;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .deadline-date .day {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1f3a8a;
+        }
+
+        .deadline-date .month {
+            font-size: 12px;
+            color: #1f3a8a;
+        }
+
+        .deadline-details h4 {
+            margin-bottom: 5px;
+        }
+
+        .deadline-details p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Recent Activities */
+        .activity-list {
+            margin-top: 15px;
+        }
+
+        .activity-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #f0f4ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1f3a8a;
+            margin-right: 15px;
+        }
+
+        .activity-details h4 {
+            margin-bottom: 5px;
+        }
+
+        .activity-details p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .activity-time {
+            color: #888;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .overview-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .publications-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+            }
+            
+            .sidebar-menu ul li a span {
+                display: none;
+            }
+            
+            .sidebar-menu ul li a i {
+                margin-right: 0;
+                font-size: 20px;
+            }
+            
+            .main-content {
+                margin-left: 80px;
+            }
+            
+            .menu-section h3 {
+                display: none;
+            }
+            
+            .analytics-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .overview-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .publications-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <a href="{{ url_for('home') }}" class="logo">Tina Education</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Messages</a></li>
+                    <li><a href="#">Notifications</a></li>
+                    <li class="profile-menu">
+                        <div class="profile-pic">JD</div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <ul>
+                    <li><a href="#" class="active"><i>📊</i> <span>Dashboard</span></a></li>
+                    <li><a href="#"><i>📚</i> <span>My Publications</span></a></li>
+                    <li><a href="#"><i>📝</i> <span>Drafts</span></a></li>
+                    <li><a href="{{ url_for('review') }}"><i>📋</i> <span>Reviews</span></a></li>
+                    <li><a href="#"><i>📈</i> <span>Analytics</span></a></li>
+                </ul>
+
+                <div class="menu-section">
+                    <h3>Collaboration</h3>
+                    <ul>
+                        <li><a href="#"><i>👥</i> <span>Co-authors</span></a></li>
+                        <li><a href="#"><i>💬</i> <span>Messages</span></a></li>
+                        <li><a href="#"><i>🔔</i> <span>Notifications</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#"><i>📕</i> <span>My Library</span></a></li>
+                        <li><a href="#"><i>🧰</i> <span>Writing Tools</span></a></li>
+                        <li><a href="#"><i>📅</i> <span>Calendar</span></a></li>
+                        <li><a href="#"><i>⚙️</i> <span>Settings</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Welcome back, John!</h1>
+                <div class="action-buttons">
+                    <button class="btn btn-outline">Import Content</button>
+                    <button class="btn btn-primary">Create New</button>
+                </div>
+            </div>
+
+            <div class="overview-cards">
+                <div class="card stat-card">
+                    <div class="card-icon">📚</div>
+                    <h3>15</h3>
+                    <p>Total Publications</p>
+                </div>
+                <div class="card stat-card">
+                    <div class="card-icon">👁️</div>
+                    <h3>2,458</h3>
+                    <p>Total Views</p>
+                </div>
+                <div class="card stat-card">
+                    <div class="card-icon">⬇️</div>
+                    <h3>350</h3>
+                    <p>Downloads</p>
+                </div>
+                <div class="card stat-card">
+                    <div class="card-icon">📝</div>
+                    <h3>8</h3>
+                    <p>Pending Reviews</p>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2>Recent Publications</h2>
+                    <a href="#">View All</a>
+                </div>
+
+                <div class="publications-grid">
+                    <div class="publication-card">
+                        <div class="publication-cover">
+                            <div class="publication-status status-published">Published</div>
+                        </div>
+                        <div class="publication-details">
+                            <h3>Modern Teaching Methodologies</h3>
+                            <div class="publication-meta">
+                                <span>Mar 15, 2025</span>
+                                <span>786 views</span>
+                            </div>
+                            <div class="publication-actions">
+                                <a href="#" class="action-link">Edit</a>
+                                <a href="#" class="action-link">View Stats</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="publication-card">
+                        <div class="publication-cover">
+                            <div class="publication-status status-draft">Draft</div>
+                        </div>
+                        <div class="publication-details">
+                            <h3>Digital Learning Platforms</h3>
+                            <div class="publication-meta">
+                                <span>Mar 10, 2025</span>
+                                <span>Last edited 2d ago</span>
+                            </div>
+                            <div class="publication-actions">
+                                <a href="#" class="action-link">Continue Editing</a>
+                                <a href="#" class="action-link">Preview</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="publication-card">
+                        <div class="publication-cover">
+                            <div class="publication-status status-review">Under Review</div>
+                        </div>
+                        <div class="publication-details">
+                            <h3>Curriculum Development Strategies</h3>
+                            <div class="publication-meta">
+                                <span>Mar 8, 2025</span>
+                                <span>2 reviews pending</span>
+                            </div>
+                            <div class="publication-actions">
+                                <a href="#" class="action-link">Check Status</a>
+                                <a href="#" class="action-link">View Comments</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2>Analytics Overview</h2>
+                    <a href="#">Detailed Reports</a>
+                </div>
+
+                <div class="analytics-container">
+                    <div class="chart-container">
+                        <h3>Publication Performance</h3>
+                        <div class="chart-placeholder">
+                            [Views & Downloads Chart]
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3>Reader Demographics</h3>
+                        <div class="chart-placeholder">
+                            [Demographics Chart]
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2>Upcoming Deadlines</h2>
+                    <a href="#">View Calendar</a>
+                </div>
+
+                <div class="card">
+                    <div class="deadlines-list">
+                        <div class="deadline-item">
+                            <div class="deadline-date">
+                                <span class="day">25</span>
+                                <span class="month">Mar</span>
+                            </div>
+                            <div class="deadline-details">
+                                <h4>Conference Paper Submission</h4>
+                                <p>EdTech Global Summit 2025</p>
+                            </div>
+                        </div>
+                        
+                        <div class="deadline-item">
+                            <div class="deadline-date">
+                                <span class="day">02</span>
+                                <span class="month">Apr</span>
+                            </div>
+                            <div class="deadline-details">
+                                <h4>Peer Review Deadline</h4>
+                                <p>Educational Psychology Journal</p>
+                            </div>
+                        </div>
+                        
+                        <div class="deadline-item">
+                            <div class="deadline-date">
+                                <span class="day">15</span>
+                                <span class="month">Apr</span>
+                            </div>
+                            <div class="deadline-details">
+                                <h4>Book Chapter Draft</h4>
+                                <p>Modern Teaching Anthology</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2>Recent Activities</h2>
+                </div>
+
+                <div class="card">
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">📝</div>
+                            <div class="activity-details">
+                                <h4>New Review Received</h4>
+                                <p>Dr. Sarah Johnson reviewed your paper "Modern Teaching Methodologies"</p>
+                                <span class="activity-time">2 hours ago</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">👥</div>
+                            <div class="activity-details">
+                                <h4>Co-author Request</h4>
+                                <p>Prof. Michael Chen wants to collaborate on "Digital Learning Platforms"</p>
+                                <span class="activity-time">Yesterday</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">⬇️</div>
+                            <div class="activity-details">
+                                <h4>Download Milestone</h4>
+                                <p>Your publication "Assessment Techniques" reached 100 downloads</p>
+                                <span class="activity-time">2 days ago</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">🔔</div>
+                            <div class="activity-details">
+                                <h4>Upcoming Conference</h4>
+                                <p>Reminder: EdTech Global Summit 2025 registration closes soon</p>
+                                <span class="activity-time">3 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

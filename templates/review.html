@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviewer Workspace - Tina Education</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        /* Header Section */
+        header {
+            background-color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .main-nav ul li {
+            margin-left: 30px;
+        }
+
+        .main-nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .main-nav ul li a.active {
+            color: #1f3a8a;
+            font-weight: 700;
+        }
+
+        /* Secondary Navigation */
+        .secondary-nav {
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            background-color: white;
+        }
+
+        .secondary-nav ul {
+            display: flex;
+            list-style: none;
+            padding: 15px 0;
+        }
+
+        .secondary-nav ul li {
+            margin-right: 30px;
+        }
+
+        .secondary-nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* Dashboard Section */
+        .dashboard {
+            padding: 40px 0;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-text h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text p {
+            color: #666;
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1f3a8a;
+        }
+
+        /* Requests Section */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .filter-options select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+        }
+
+        .requests-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .request-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .request-header {
+            padding: 15px 20px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .request-header h3 {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .request-type {
+            padding: 5px 10px;
+            background-color: #e0e0e0;
+            border-radius: 15px;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .request-content {
+            padding: 20px;
+        }
+
+        .request-meta {
+            display: flex;
+            margin-bottom: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .request-meta div {
+            margin-right: 20px;
+        }
+
+        .request-meta span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .request-description {
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #1f3a8a;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #162c68;
+        }
+
+        .btn-secondary {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background-color: #ccc;
+        }
+
+        /* Active Reviews Section */
+        .active-reviews {
+            margin-bottom: 40px;
+        }
+
+        .review-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .review-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .review-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-progress {
+            background-color: #fef3e6;
+            color: #ff9900;
+        }
+
+        .status-due-soon {
+            background-color: #ffeaea;
+            color: #ff4d4d;
+        }
+
+        .review-img {
+            height: 120px;
+            background-color: #147a7a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .review-content {
+            padding: 20px;
+        }
+
+        .review-content h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .review-content p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #1f3a8a;
+            border-radius: 3px;
+        }
+
+        /* Resources Section */
+        .resources {
+            margin-bottom: 40px;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .resource-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .resource-card h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .resource-card p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #111;
+            color: white;
+            padding: 30px 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .quick-links ul, .services ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .quick-links ul li, .services ul li {
+            margin-bottom: 10px;
+        }
+
+        .quick-links ul li a, .services ul li a {
+            color: #ccc;
+            text-decoration: none;
+        }
+
+        .newsletter {
+            margin-top: 20px;
+        }
+
+        .newsletter input {
+            padding: 10px;
+            width: 70%;
+            border: none;
+        }
+
+        .newsletter button {
+            padding: 10px 15px;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            margin-top: 20px;
+            padding-top: 20px;
+            text-align: center;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        /* Modal Style */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal {
+            background-color: white;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 20px;
+            background-color: #1f3a8a;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 20px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .review-workspace {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .document-viewer {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            height: 500px;
+            overflow-y: auto;
+        }
+
+        .review-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            min-height: 150px;
+            font-family: Arial, sans-serif;
+        }
+
+        .rating-select {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .star {
+            color: #ccc;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .star.active {
+            color: #ffb900;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">Tina Education</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Service</a></li>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="#" class="active">Reviewer Workspace</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="secondary-nav">
+        <div class="container">
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="#">Pending Requests</a></li>
+                <li><a href="#">Active Reviews</a></li>
+                <li><a href="#">Completed Reviews</a></li>
+                <li><a href="#">Resources</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <section class="dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <div class="welcome-text">
+                    <h1>Welcome back, Dr. Johnson</h1>
+                    <p>Here's an overview of your review activities</p>
+                </div>
+                <div class="date">
+                    <p>March 23, 2025</p>
+                </div>
+            </div>
+
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <h3>Pending Requests</h3>
+                    <p>3</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Reviews</h3>
+                    <p>4</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Completed Reviews</h3>
+                    <p>27</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Due This Week</h3>
+                    <p>2</p>
+                </div>
+            </div>
+
+            <div class="pending-requests">
+                <div class="section-header">
+                    <h2>Pending Review Requests</h2>
+                    <div class="filter-options">
+                        <select>
+                            <option>All Types</option>
+                            <option>Books</option>
+                            <option>Journals</option>
+                            <option>Articles</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="requests-grid">
+                    <div class="request-card">
+                        <div class="request-header">
+                            <h3>Advanced Educational Psychology</h3>
+                            <span class="request-type">Book</span>
+                        </div>
+                        <div class="request-content">
+                            <div class="request-meta">
+                                <div class="author">
+                                    Author: <span>Maria Garcia</span>
+                                </div>
+                                <div class="deadline">
+                                    Requested by: <span>April 15, 2025</span>
+                                </div>
+                            </div>
+                            <div class="request-description">
+                                <p>A comprehensive textbook on educational psychology focusing on learning theories and their practical applications in modern classrooms.</p>
+                            </div>
+                            <div class="request-actions">
+                                <button class="btn btn-primary">Accept</button>
+                                <button class="btn btn-secondary">Decline</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="request-card">
+                        <div class="request-header">
+                            <h3>Cognitive Development in Digital Age</h3>
+                            <span class="request-type">Journal</span>
+                        </div>
+                        <div class="request-content">
+                            <div class="request-meta">
+                                <div class="author">
+                                    Author: <span>James Wilson</span>
+                                </div>
+                                <div class="deadline">
+                                    Requested by: <span>April 10, 2025</span>
+                                </div>
+                            </div>
+                            <div class="request-description">
+                                <p>Research paper examining the impact of digital technologies on cognitive development in children aged 5-12 years.</p>
+                            </div>
+                            <div class="request-actions">
+                                <button class="btn btn-primary">Accept</button>
+                                <button class="btn btn-secondary">Decline</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="request-card">
+                        <div class="request-header">
+                            <h3>Teaching Mathematics Through Project-Based Learning</h3>
+                            <span class="request-type">Article</span>
+                        </div>
+                        <div class="request-content">
+                            <div class="request-meta">
+                                <div class="author">
+                                    Author: <span>Sarah Ahmed</span>
+                                </div>
+                                <div class="deadline">
+                                    Requested by: <span>April 5, 2025</span>
+                                </div>
+                            </div>
+                            <div class="request-description">
+                                <p>An exploration of effective project-based learning approaches for teaching mathematics in middle and high school settings.</p>
+                            </div>
+                            <div class="request-actions">
+                                <button class="btn btn-primary">Accept</button>
+                                <button class="btn btn-secondary">Decline</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="active-reviews">
+                <div class="section-header">
+                    <h2>Active Reviews</h2>
+                    <div class="filter-options">
+                        <select>
+                            <option>All Status</option>
+                            <option>In Progress</option>
+                            <option>Due Soon</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="review-cards">
+                    <div class="review-card">
+                        <span class="review-status status-due-soon">Due in 2 days</span>
+                        <div class="review-img">Book Cover</div>
+                        <div class="review-content">
+                            <h3>The Future of STEM Education</h3>
+                            <p>Author: Robert Chen</p>
+                            <p>Due: March 25, 2025</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                            <p>Progress: 75% complete</p>
+                            <button class="btn btn-primary" onclick="openReviewWorkspace()">Continue Review</button>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <span class="review-status status-progress">In Progress</span>
+                        <div class="review-img">Journal Cover</div>
+                        <div class="review-content">
+                            <h3>Inclusive Education Strategies</h3>
+                            <p>Author: Lisa Johnson</p>
+                            <p>Due: April 3, 2025</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 30%"></div>
+                            </div>
+                            <p>Progress: 30% complete</p>
+                            <button class="btn btn-primary">Continue Review</button>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <span class="review-status status-progress">In Progress</span>
+                        <div class="review-img">Article Cover</div>
+                        <div class="review-content">
+                            <h3>Digital Literacy for Educators</h3>
+                            <p>Author: David Kim</p>
+                            <p>Due: April 10, 2025</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                            <p>Progress: 45% complete</p>
+                            <button class="btn btn-primary">Continue Review</button>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <span class="review-status status-due-soon">Due Tomorrow</span>
+                        <div class="review-img">Book Cover</div>
+                        <div class="review-content">
+                            <h3>Assessment Techniques in Higher Education</h3>
+                            <p>Author: Emily Wong</p>
+                            <p>Due: March 24, 2025</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 90%"></div>
+                            </div>
+                            <p>Progress: 90% complete</p>
+                            <button class="btn btn-primary">Continue Review</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resources">
+                <div class="section-header">
+                    <h2>Reviewer Resources</h2>
+                </div>
+
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <h3>Reviewer Guidelines</h3>
+                        <p>Standard guidelines and best practices for conducting effective reviews.</p>
+                        <a href="#" class="btn btn-secondary">View Guidelines</a>
+                    </div>
+
+                    <div class="resource-card">
+                        <h3>Evaluation Criteria</h3>
+                        <p>Detailed criteria for evaluating different types of educational materials.</p>
+                        <a href="#" class="btn btn-secondary">View Criteria</a>
+                    </div>
+
+                    <div class="resource-card">
+                        <h3>Review Templates</h3>
+                        <p>Standardized templates to help structure your review feedback.</p>
+                        <a href="#" class="btn btn-secondary">View Templates</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Review Workspace Modal -->
+    <div class="modal-overlay" id="reviewWorkspaceModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>The Future of STEM Education - Review Workspace</h2>
+                <button class="close-modal" onclick="closeReviewWorkspace()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="review-workspace">
+                    <div class="document-viewer">
+                        <h3>Chapter 1: The Evolution of STEM Education</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.</p>
+                        <p>Suspendisse in orci enim. Donec suscipit ante in hendrerit placerat. Etiam commodo suscipit diam, vel aliquam nisi mattis vitae. In lacinia condimentum auctor. Integer ut tempus metus. Vivamus consequat felis vel magna suscipit ut pretium mi molestie.</p>
+                        <h4>1.1 Historical Context</h4>
+                        <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut vel bibendum urna. Nulla facilisi. Aenean iaculis aliquet turpis, vel eleifend mauris eleifend vel. Quisque vestibulum fringilla leo, eget pretium justo tempor vitae.</p>
+                        <p>Cras auctor sagittis neque, vel hendrerit metus placerat quis. Sed non eros ut lacus dignissim pellentesque. Suspendisse potenti. Nulla facilisi. Etiam tincidunt enim eget nisi interdum, vel condimentum sapien maximus.</p>
+                        <h4>1.2 Current Landscape</h4>
+                        <p>Nullam convallis, odio ac varius facilisis, magna dolor pharetra sem, sit amet fermentum enim ex eget nisi. Etiam tincidunt, arcu in pharetra tempus, tellus mauris sodales odio, vel consequat quam diam eget nisi.</p>
+                    </div>
+                    <div class="review-form">
+                        <h3>Your Review</h3>
+                        <div class="rating-section">
+                            <p>Overall Rating:</p>
+                            <div class="rating-select">
+                                <span class="star active">★</span>
+                                <span class="star active">★</span>
+                                <span class="star active">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="content-evaluation">Content Evaluation:</label>
+                            <textarea id="content-evaluation" placeholder="Evaluate the accuracy, relevance, and depth of the content..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="presentation-evaluation">Style & Presentation:</label>
+                            <textarea id="presentation-evaluation" placeholder="Evaluate writing style, organization, and clarity..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="strengths">Strengths:</label>
+                            <textarea id="strengths" placeholder="Note major strengths of the material..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="weaknesses">Areas for Improvement:</label>
+                            <textarea id="weaknesses" placeholder="Suggest areas that need improvement..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary">Save Draft</button>
+                <button class="btn btn-primary">Submit Review</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div class="quick-links">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Books</a></li>
+                            <li><a href="#">Reviewer Resources</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-right">
+                    <div class="services">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">Publishing</a></li>
+                            <li><a href="#">Editing</a></li>
+                            <li><a href="#">Formatting</a></li>
+                            <li><a href="#">Peer Review</a></li>
+                        </ul>
+                    </div>
+                    <div class="newsletter">
+                        <h3>News Letter Sign up</h3>
+                        <div>
+                            <input type="email" placeholder="Enter your Email">
+                            <button>Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Copyright © 2025 - Tina Education</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function openReviewWorkspace() {
+            document.getElementById('reviewWorkspaceModal').style.display = 'flex';
+        }
+        
+        function closeReviewWorkspace() {
+            document.getElementById('reviewWorkspaceModal').style.display = 'none';
+        }
+        
+        // Star rating functionality
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                stars.forEach((s, i) => {
+                    if (i <= index) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
